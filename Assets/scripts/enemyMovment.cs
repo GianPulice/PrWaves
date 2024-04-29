@@ -6,7 +6,7 @@ public class enemyMovment : MonoBehaviour
 {
     public float speed = 3f;
     public Transform player;
-
+   
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;

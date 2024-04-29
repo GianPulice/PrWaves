@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 5f;
     private Vector2 direction;
 
 
@@ -34,15 +34,7 @@ public class Projectile : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(gameObject);
 
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                characterMovment playerMovement = player.GetComponent<characterMovment>();
-                if (playerMovement != null)
-                {
-                    playerMovement.AddCredits(50);
-                }
-            }
+            
         }
 
     }

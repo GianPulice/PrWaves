@@ -16,7 +16,6 @@ public class characterMovment : MonoBehaviour
 
     public Text healthText;
     public Text projectilesText;
-    public Text creditsText;
 
     void Start()
     {
@@ -29,13 +28,7 @@ public class characterMovment : MonoBehaviour
         
         UpdateUI();
 
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
 
-
-        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized * speed * Time.deltaTime;
-
-        transform.Translate(movement);
 
      
         if (Input.GetMouseButtonDown(0) && currentProjectiles > 0)
@@ -64,11 +57,7 @@ public class characterMovment : MonoBehaviour
         }
     }
 
-    public void AddCredits(int amount)
-    {
-        credits += amount; 
-        UpdateUI(); 
-    }
+  
 
         void OnTriggerEnter2D(Collider2D other)
         {
@@ -77,24 +66,8 @@ public class characterMovment : MonoBehaviour
                 TakeDamage(10);
             }
 
-        if (other.CompareTag("ammo"))
-        {
-            if (Input.GetKey(KeyCode.E) && credits >= 500)
-            {
-                currentProjectiles = maxProjectiles; 
-                credits -= 500; 
-                UpdateUI();
-            }
-        }
+        
 
-        if (other.CompareTag("Door"))
-        {
-            if (Input.GetKey(KeyCode.E) && credits >= 1800)
-            {
-                credits -= 1000;
-                Destroy(other.gameObject);
-            }
-        }
     }
 
         void TakeDamage(int damage)
@@ -126,10 +99,6 @@ public class characterMovment : MonoBehaviour
                 projectilesText.text = "Projectiles: " + currentProjectiles.ToString();
             }
 
-            if (creditsText != null)
-            {
-                creditsText.text = "Credits: " + credits.ToString(); 
-            }
     }
 }
 
