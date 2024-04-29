@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class characterMovment : MonoBehaviour
 {
@@ -27,7 +28,10 @@ public class characterMovment : MonoBehaviour
     {
         
         UpdateUI();
-
+        if(currentHealth <= 0)
+        {
+            SceneManager.LoadScene("lose");
+        }
 
 
      

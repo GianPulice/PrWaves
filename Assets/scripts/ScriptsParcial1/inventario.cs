@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class inventario : MonoBehaviour
 {
     private Queue<GameObject> itemQueue;
     private int maxSlots = 3;
+    public Text inventoryText;
 
     void Start()
     {
         itemQueue = new Queue<GameObject>();
+        UpdateInventoryText();
     }
 
     void Update()
@@ -18,6 +21,8 @@ public class inventario : MonoBehaviour
         {
             UseItem();
         }
+        
+
     }
 
     public void AddItem(GameObject item)
@@ -29,6 +34,7 @@ public class inventario : MonoBehaviour
         }
 
         itemQueue.Enqueue(item);
+        UpdateInventoryText();
     }
 
     
@@ -37,7 +43,9 @@ public class inventario : MonoBehaviour
         
             if (itemQueue.Count > 0)
             {
-                GameObject itemToUse = itemQueue.Peek();
+
+
+            GameObject itemToUse = itemQueue.Peek();
 
                 heal healItem = itemToUse.GetComponent<heal>();
                 ammo ammoItem = itemToUse.GetComponent<ammo>();
@@ -59,13 +67,26 @@ public class inventario : MonoBehaviour
                         player.AddAmmo(ammoItem.ammoToAdd);
                     }
                 }
-                Debug.Log("Usando: " + itemToUse.name);
+                
                 itemQueue.Dequeue();
                 Destroy(itemToUse);
-            }
+            UpdateInventoryText();
+        }
             else
         {
             Debug.Log("vacio");
         }
     }
+    private void UpdateInventoryText()
+    {
+        string inventoryContent = "Inventario:\n";
+        foreach (GameObject item in itemQueue)
+        {
+            
+            string itemName = item.name.Replace("(Clone)", "");
+            inventoryContent += "- " + itemName + "\n";
+        }
+        inventoryText.text = inventoryContent;
+    }
+
 }
