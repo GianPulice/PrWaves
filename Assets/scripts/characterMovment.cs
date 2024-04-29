@@ -12,7 +12,7 @@ public class characterMovment : MonoBehaviour
     public GameObject projectilePrefab;
     public int maxProjectiles = 100;
     public int currentProjectiles;
-    public int credits = 0;
+    
 
     public Text healthText;
     public Text projectilesText;
@@ -68,7 +68,7 @@ public class characterMovment : MonoBehaviour
 
         
 
-    }
+        }
 
         void TakeDamage(int damage)
         {
@@ -87,7 +87,19 @@ public class characterMovment : MonoBehaviour
             Destroy(gameObject);
         }
 
-        void UpdateUI()
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        UpdateUI();
+    }
+
+    public void AddAmmo(int amount)
+    {
+        currentProjectiles = Mathf.Min(currentProjectiles + amount, maxProjectiles);
+        UpdateUI();
+    }
+
+    void UpdateUI()
         {
             if (healthText != null)
             {

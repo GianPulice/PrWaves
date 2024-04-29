@@ -7,8 +7,12 @@ public class Projectile : MonoBehaviour
     public float speed = 5f;
     private Vector2 direction;
 
+    private inventario inventario;
 
-
+    void Start()
+    {
+        inventario = GameObject.FindGameObjectWithTag("Player").GetComponent<inventario>();
+    }
 
     void Update()
     {
@@ -34,7 +38,12 @@ public class Projectile : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(gameObject);
 
-            
+        }
+
+        if (other.CompareTag("Item"))
+        {
+            inventario.AddItem(other.gameObject);
+            other.gameObject.SetActive(false);
         }
 
     }
