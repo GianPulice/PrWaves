@@ -10,6 +10,8 @@ public class Spawn : MonoBehaviour
     private Stack<GameObject> prefabStack;
     private float nextSpawnTime;
 
+    public int spawnCount;
+
     public GameObject enemy;
     public GameObject enemy1;
     public GameObject enemy2;
@@ -21,7 +23,7 @@ public class Spawn : MonoBehaviour
         nextSpawnTime = Time.time + spawnInterval;
 
         
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
             GameObject prefab = GetRandomPrefab(); 
             prefabStack.Push(prefab); 
