@@ -20,7 +20,7 @@ public class Spawn : MonoBehaviour
         prefabStack = new Stack<GameObject>();
         nextSpawnTime = Time.time + spawnInterval;
 
-        // Agregar prefabs a la pila
+        
         for (int i = 0; i < 20; i++)
         {
             GameObject prefab = GetRandomPrefab(); 
