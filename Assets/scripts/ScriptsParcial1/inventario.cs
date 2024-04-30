@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,13 @@ using UnityEngine.UI;
 
 public class inventario : MonoBehaviour
 {
-    private Queue<GameObject> itemQueue;
-    private int maxSlots = 3;
+    private Cola<GameObject> itemQueue;
+    private int maxSlots = 2;
     public Text inventoryText;
 
     void Start()
     {
-        itemQueue = new Queue<GameObject>();
+        itemQueue = new Cola<GameObject>();
         UpdateInventoryText();
     }
 
@@ -21,72 +22,64 @@ public class inventario : MonoBehaviour
         {
             UseItem();
         }
-        
-
     }
 
     public void AddItem(GameObject item)
     {
         if (itemQueue.Count >= maxSlots)
         {
-            GameObject oldItem = itemQueue.Dequeue();
+            GameObject oldItem = itemQueue.Tomar();
             Destroy(oldItem);
         }
 
-        itemQueue.Enqueue(item);
+        itemQueue.Encolar(item);
         UpdateInventoryText();
     }
 
-    
     private void UseItem()
     {
-        
-            if (itemQueue.Count > 0)
+        if (itemQueue.Count > 0)
+        {
+            GameObject itemToUse = itemQueue.Tomar();
+
+            heal healItem = itemToUse.GetComponent<heal>();
+            ammo ammoItem = itemToUse.GetComponent<ammo>();
+
+            if (healItem != null)
             {
-
-
-            GameObject itemToUse = itemQueue.Peek();
-
-                heal healItem = itemToUse.GetComponent<heal>();
-                ammo ammoItem = itemToUse.GetComponent<ammo>();
-
-                if (healItem != null)
+                characterMovment player = GetComponent<characterMovment>();
+                if (player != null)
                 {
-                    characterMovment player = GetComponent<characterMovment>();
-                    if (player != null)
-                    {
-                        player.Heal(healItem.healthToAdd);
-                    }
+                    player.Heal(healItem.healthToAdd);
                 }
+            }
 
-                if (ammoItem != null)
+            if (ammoItem != null)
+            {
+                characterMovment player = GetComponent<characterMovment>();
+                if (player != null)
                 {
-                    characterMovment player = GetComponent<characterMovment>();
-                    if (player != null)
-                    {
-                        player.AddAmmo(ammoItem.ammoToAdd);
-                    }
+                    player.AddAmmo(ammoItem.ammoToAdd);
                 }
-                
-                itemQueue.Dequeue();
-                Destroy(itemToUse);
+            }
+
+            itemQueue.Desencolar();
             UpdateInventoryText();
         }
-            else
+        else
         {
-            Debug.Log("vacio");
+            Debug.Log("El inventario está vacío.");
         }
     }
+
     private void UpdateInventoryText()
     {
         string inventoryContent = "Inventario:\n";
         foreach (GameObject item in itemQueue)
         {
             
-            string itemName = item.name.Replace("(Clone)", "");
-            inventoryContent += "- " + itemName + "\n";
+            inventoryContent += "- " + item.name + "\n";
         }
         inventoryText.text = inventoryContent;
     }
-
 }

@@ -7,7 +7,7 @@ public class Spawn : MonoBehaviour
     public Vector2 spawnArea;
     public float spawnInterval = 1f;
 
-    private Stack<GameObject> prefabStack;
+    private Pila<GameObject> prefabStack;
     private float nextSpawnTime;
 
     public int spawnCount;
@@ -19,26 +19,26 @@ public class Spawn : MonoBehaviour
 
     void Start()
     {
-        prefabStack = new Stack<GameObject>();
+        prefabStack = new Pila<GameObject>();
         nextSpawnTime = Time.time + spawnInterval;
 
-        
+
         for (int i = 0; i < spawnCount; i++)
         {
-            GameObject prefab = GetRandomPrefab(); 
-            prefabStack.Push(prefab); 
+            GameObject prefab = GetRandomPrefab();
+            prefabStack.Apilar(prefab);
         }
     }
 
     void Update()
     {
-        if (Time.time >= nextSpawnTime && prefabStack.Count > 0)
+        if (Time.time >= nextSpawnTime && !prefabStack.EstaVacia)
         {
-            
-            GameObject prefabToSpawn = prefabStack.Pop();
+
+            GameObject prefabToSpawn = prefabStack.Desapilar();
             SpawnPrefab(prefabToSpawn);
 
-            
+
             nextSpawnTime = Time.time + spawnInterval;
         }
     }
@@ -56,13 +56,13 @@ public class Spawn : MonoBehaviour
 
     GameObject GetRandomPrefab()
     {
-        
+
         GameObject[] availablePrefabs = new GameObject[] { enemy, enemy1, enemy2 };
 
-        
+
         int randomIndex = Random.Range(0, availablePrefabs.Length);
 
-       
+
         return availablePrefabs[randomIndex];
     }
 }

@@ -42,8 +42,8 @@ public class Projectile : MonoBehaviour
 
         if (other.CompareTag("Item"))
         {
-            inventario.AddItem(other.gameObject);
             other.gameObject.SetActive(false);
+            inventario.AddItem(other.gameObject);
         }
 
     }
