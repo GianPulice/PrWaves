@@ -42,27 +42,32 @@ public class inventario : MonoBehaviour
         {
             GameObject itemToUse = itemQueue.Tomar();
 
-            heal healItem = itemToUse.GetComponent<heal>();
-            ammo ammoItem = itemToUse.GetComponent<ammo>();
-
-            if (healItem != null)
+            // Verificar si el objeto todavía es válido
+            if (itemToUse != null)
             {
-                characterMovment player = GetComponent<characterMovment>();
-                if (player != null)
+                heal healItem = itemToUse.GetComponent<heal>();
+                ammo ammoItem = itemToUse.GetComponent<ammo>();
+
+                // Resto del código...
+
+                if (healItem != null)
                 {
-                    player.Heal(healItem.healthToAdd);
+                    characterMovment player = GetComponent<characterMovment>();
+                    if (player != null)
+                    {
+                        player.Heal(healItem.healthToAdd);
+                    }
+                }
+
+                if (ammoItem != null)
+                {
+                    characterMovment player = GetComponent<characterMovment>();
+                    if (player != null)
+                    {
+                        player.AddAmmo(ammoItem.ammoToAdd);
+                    }
                 }
             }
-
-            if (ammoItem != null)
-            {
-                characterMovment player = GetComponent<characterMovment>();
-                if (player != null)
-                {
-                    player.AddAmmo(ammoItem.ammoToAdd);
-                }
-            }
-
             itemQueue.Desencolar();
             UpdateInventoryText();
         }
@@ -77,8 +82,8 @@ public class inventario : MonoBehaviour
         string inventoryContent = "Inventario:\n";
         foreach (GameObject item in itemQueue)
         {
-            
-            inventoryContent += "- " + item.name + "\n";
+            string itemName = item.name.Replace("(Clone)", ""); 
+            inventoryContent += itemName + "\n";
         }
         inventoryText.text = inventoryContent;
     }
