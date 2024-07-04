@@ -30,7 +30,7 @@ public class characterMovment : MonoBehaviour
         UpdateUI();
         if(currentHealth <= 0)
         {
-            SceneManager.LoadScene("lose");
+            SceneManager.LoadScene("game2");
         }
 
 
@@ -79,17 +79,10 @@ public class characterMovment : MonoBehaviour
             currentHealth -= damage;
 
             
-            if (currentHealth <= 0)
-            {
-                Die();
-            }
+          
         }
 
-        void Die()
-        {
-
-            Destroy(gameObject);
-        }
+   
 
     public void Heal(int amount)
     {
