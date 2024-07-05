@@ -45,7 +45,7 @@ public class victoria : MonoBehaviour
 
     void ChangeScene()
     {
-        SceneManager.LoadScene("win");
+        SceneManager.LoadScene("Win");
     }
 }
 

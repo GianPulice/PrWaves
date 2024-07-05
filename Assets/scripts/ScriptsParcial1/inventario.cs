@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class inventario : MonoBehaviour
 {
     private Cola<GameObject> itemQueue;
-    private int maxSlots = 2;
+    private int maxSlots = 3; // Ajustado a 3 para mejor gestión de límite
     public Text inventoryText;
 
     void Start()
@@ -28,11 +28,11 @@ public class inventario : MonoBehaviour
     {
         if (itemQueue.Count >= maxSlots)
         {
-            GameObject oldItem = itemQueue.Tomar();
+            GameObject oldItem = itemQueue.Remover(); 
             Destroy(oldItem);
         }
 
-        itemQueue.Encolar(item);
+        itemQueue.Agregar(item);
         UpdateInventoryText();
     }
 
@@ -40,15 +40,12 @@ public class inventario : MonoBehaviour
     {
         if (itemQueue.Count > 0)
         {
-            GameObject itemToUse = itemQueue.Tomar();
+            GameObject itemToUse = itemQueue.Remover(); 
 
-            // Verificar si el objeto todavía es válido
             if (itemToUse != null)
             {
                 heal healItem = itemToUse.GetComponent<heal>();
                 ammo ammoItem = itemToUse.GetComponent<ammo>();
-
-                // Resto del código...
 
                 if (healItem != null)
                 {
@@ -67,8 +64,10 @@ public class inventario : MonoBehaviour
                         player.AddAmmo(ammoItem.ammoToAdd);
                     }
                 }
+
+                Destroy(itemToUse); 
             }
-            itemQueue.Desencolar();
+
             UpdateInventoryText();
         }
         else
@@ -82,8 +81,11 @@ public class inventario : MonoBehaviour
         string inventoryContent = "Inventario:\n";
         foreach (GameObject item in itemQueue)
         {
-            string itemName = item.name.Replace("(Clone)", ""); 
-            inventoryContent += itemName + "\n";
+            if (item != null)
+            {
+                string itemName = item.name.Replace("(Clone)", "");
+                inventoryContent += itemName + "\n";
+            }
         }
         inventoryText.text = inventoryContent;
     }

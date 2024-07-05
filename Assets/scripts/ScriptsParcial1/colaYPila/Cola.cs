@@ -3,25 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cola<T>
+public class Cola<T> : IPilayCola<T>, IEnumerable<T>, IEnumerable
 {
-    private List<T> items;
+     private List<T> items;
 
     public Cola()
     {
         items = new List<T>();
     }
 
-    public void Encolar(T item)
+    public void Agregar(T item)
     {
         items.Add(item);
     }
 
-    public T Desencolar()
+    public T Remover()
     {
         if (items.Count == 0)
         {
-            throw new InvalidOperationException("cola vacia");
+            throw new InvalidOperationException("Cola vacía");
         }
 
         T item = items[0];
@@ -33,22 +33,25 @@ public class Cola<T>
     {
         if (items.Count == 0)
         {
-            throw new InvalidOperationException("cola vacia");
+            throw new InvalidOperationException("Cola vacía");
         }
 
         return items[0];
     }
 
-    public int Count => items.Count;
-
-    public bool EstaVacia => items.Count == 0;
 
     public IEnumerator<T> GetEnumerator()
     {
-        foreach (T item in items)
-        {
-            yield return item;
-        }
+        return items.GetEnumerator();
     }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public int Count => items.Count;
+
+    public bool EstaVacia => items.Count == 0;
 }
 

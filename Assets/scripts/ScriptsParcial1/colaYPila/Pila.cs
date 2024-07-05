@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pila<T>
+public class Pila<T> :IPilayCola<T>
 {
     private List<T> items;
 
@@ -12,16 +12,16 @@ public class Pila<T>
         items = new List<T>();
     }
 
-    public void Apilar(T item)
+    public void Agregar(T item)
     {
         items.Add(item);
     }
 
-    public T Desapilar()
+    public T Remover()
     {
         if (items.Count == 0)
         {
-            throw new InvalidOperationException("Pila vacia");
+            throw new InvalidOperationException("Pila vacía");
         }
 
         int lastIndex = items.Count - 1;
@@ -34,7 +34,7 @@ public class Pila<T>
     {
         if (items.Count == 0)
         {
-            throw new InvalidOperationException("Pila vacia");
+            throw new InvalidOperationException("Pila vacía");
         }
 
         return items[items.Count - 1];

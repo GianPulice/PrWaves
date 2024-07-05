@@ -26,7 +26,7 @@ public class Spawn : MonoBehaviour
         for (int i = 0; i < spawnCount; i++)
         {
             GameObject prefab = GetRandomPrefab();
-            prefabStack.Apilar(prefab);
+            prefabStack.Agregar(prefab);
         }
     }
 
@@ -35,7 +35,7 @@ public class Spawn : MonoBehaviour
         if (Time.time >= nextSpawnTime && !prefabStack.EstaVacia)
         {
 
-            GameObject prefabToSpawn = prefabStack.Desapilar();
+            GameObject prefabToSpawn = prefabStack.Remover();
             SpawnPrefab(prefabToSpawn);
 
 
