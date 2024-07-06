@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public int totalItems; 
     public int itemsCollected;
 
-    private float timer = 20f;
+    
 
     private void Awake()
     {
@@ -38,14 +38,7 @@ public class GameManager : MonoBehaviour
         itemsCollected = 0;
     }
 
-    private void Update()
-    {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
-        {
-            SceneManager.LoadScene("lose");
-        }
-    }
+ 
 
     public void MovePlayerTo(Vector2Int position)
     {

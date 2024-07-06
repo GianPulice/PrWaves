@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class victoria : MonoBehaviour
 {
     public float countdownDuration = 60f;
+    public string Scene;
     public Image timerImage;
     private float currentTime = 0f;
     private bool timerActive = false;
+
 
     void Start()
     {
@@ -45,7 +48,7 @@ public class victoria : MonoBehaviour
 
     void ChangeScene()
     {
-        SceneManager.LoadScene("Win");
+        SceneManager.LoadScene(Scene);
     }
 }
 
